@@ -2,17 +2,21 @@
   <div class="bga">
 
     <header>
-      <navbar cor="transparent z-depth-0" logo="Space"></navbar>
+      <navbar cor="transparent z-depth-0" logo="Space">
+            <li v-for="item in links" :key="item.nome">
+                <router-link class="orange-text text-lighten-4" :to="'/'+item.link"> {{item.nome}}</router-link>
+            </li>
+      </navbar>
     </header>
 
     <main>
       <section class="section">
           <div class="container">
               <div class="row">
-                  <grid-vue tamanho="12 m6 l6">
+                  <grid-vue tamanho="12 m8 l8">
                       <slot name="info"></slot>
                   </grid-vue>
-                  <grid-vue tamanho="12 m6 l6">
+                  <grid-vue tamanho="12 m4 l4">
                       <slot name="form"></slot>
                   </grid-vue>
               </div>
@@ -50,6 +54,14 @@ export default {
     Navbar,
     Rodape,
     GridVue
+  },
+  data () {
+    return {
+      links: [ 
+        { nome: 'Teste', link: 'teste.html' },
+        { nome: 'Sair', link: 'login' }
+      ]
+    }
   }
 }
 </script>

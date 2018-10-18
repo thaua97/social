@@ -7,9 +7,23 @@
             </h5>
         </span>
         <span slot="form">
-            <div class="card">
+            <div class="card z-depth-3">
+                
                 <div class="card-content">
-                    <p>teste</p>
+                    <div class="card-title">Login</div>
+                    <div class="row">
+                        <grid-vue tamanho="12">
+                            <div class="input-field">
+                                <label for="email">E-mail</label>
+                                <input id="email" type="text">
+                            </div>
+                            <div class="input-field">
+                                <label for="password">Senha</label>
+                                <input id="password" type="text">
+                            </div>
+                            <button class="btn btn-block deep-purple darken-4 waves-effect waves-light">Entrar</button>
+                        </grid-vue>
+                    </div>
                 </div>
             </div>
         </span>
@@ -33,6 +47,9 @@ export default {
     .font-oleo-script {
         font-family: 'Oleo Script', cursive;
         color: #ffffff; 
+    }
+    .void{
+      background: #ffffff linear-gradient(45deg, #dddddd, #ffffff);
     }
 </style>
 

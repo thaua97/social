@@ -2,7 +2,11 @@
   <div>
 
     <header>
-      <navbar cor="bg" logo="Space"></navbar>
+      <navbar cor="bg" logo="Space">
+        <li v-for="item in links" :key="item.nome">
+            <router-link class="orange-text text-lighten-4" :to="'/'+item.link"> {{item.nome}}</router-link>
+        </li>
+      </navbar>
     </header>
 
     <main>
@@ -58,6 +62,14 @@ export default {
     Navbar,
     Rodape,
     GridVue
+  },
+  data () {
+    return {
+      links: [ 
+        { nome: 'Teste', link: 'teste.html' },
+        { nome: 'Sair', link: 'login' }
+      ]
+    }
   }
 }
 </script>
