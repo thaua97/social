@@ -40,8 +40,7 @@
 </script>
 <style scoped>
 .degrad {
-    background: -webkit-linear-gradient(45deg, #f7010e 0%, #f18487 100%);
-    background-color: #f18487;
+    background: #4322ff linear-gradient(45deg, #4322ff, #ad20ff);
 }
 </style>
 

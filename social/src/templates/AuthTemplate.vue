@@ -1,31 +1,23 @@
 <template>
-  <div>
+  <div class="bga">
 
     <header>
-      <navbar cor="bg" logo="Space"></navbar>
+      <navbar cor="transparent z-depth-0" logo="Space"></navbar>
     </header>
 
     <main>
-      <div class="section">
-        <div class="container">
-            <div class="row">
-
-              <grid-vue tamanho="12 m3 l4">
-                <div class="section">
-                   <slot name="menu"></slot>
-                </div>
-              </grid-vue>
-
-              <grid-vue tamanho="12 m8 l8">
-                <div class="section">
-                  <slot name="main"></slot>
-                </div>
-              </grid-vue>
-
-            </div>
+      <section class="section">
+          <div class="container">
+              <div class="row">
+                  <grid-vue tamanho="12 m6 l6">
+                      <slot name="info"></slot>
+                  </grid-vue>
+                  <grid-vue tamanho="12 m6 l6">
+                      <slot name="form"></slot>
+                  </grid-vue>
+              </div>
           </div>
-        </div>
-      
+      </section>
     </main>
 
     <footer>
@@ -53,7 +45,7 @@ import Rodape from '@/components/Rodape/Rodape'
 import GridVue from '@/objects/Grid/GridVue'
 
 export default {
-  name: 'MainTemplate',
+  name: 'AuthTemplate',
   components: {
     Navbar,
     Rodape,
@@ -61,3 +53,14 @@ export default {
   }
 }
 </script>
+<style scoped>
+.bga {
+  background-image: url('/static/img/bg.jpg');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+</style>
+

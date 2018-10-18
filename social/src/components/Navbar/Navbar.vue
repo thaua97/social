@@ -2,7 +2,7 @@
     <div>
         <nav :class="cor">
             <div class="nav-wrapper container">
-                <a :href="url || '/'" class="brand-logo">{{logo}}</a>
+                <router-link class="brand-logo" to="/" >{{ logo }}</router-link>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li 
                         v-for="item in lista"
@@ -15,6 +15,7 @@
         </nav>
     </div>
 </template>
+
 <script>
     export default {
       name: 'Navbar',
@@ -29,3 +30,12 @@
       }
     }
 </script>
+
+<style scoped>
+.brand-logo {
+  font-family: 'Monoton', cursive;
+}
+.bg {
+    background: #2819ff linear-gradient(45deg, #4322ff, #ad20ff);
+}
+</style>
