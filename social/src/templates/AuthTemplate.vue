@@ -14,10 +14,15 @@
           <div class="container">
               <div class="row">
                   <grid-vue tamanho="12 m8 l8">
-                      <slot name="info"></slot>
+                      <h5 class="font-oleo-script">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur nobis deserunt sit modi perspiciatis unde. Enim odit a labore corporis pariatur quam, ex illo nisi accusamus. Repudiandae deserunt inventore veritatis!</h5>
                   </grid-vue>
                   <grid-vue tamanho="12 m4 l4">
-                      <slot name="form"></slot>
+                    <div class="card round z-depth-3">
+                      <div class="card-content">
+                          <div class="card-title">{{ titulo }}</div>
+                          <slot />
+                      </div>
+                    </div>
                   </grid-vue>
               </div>
           </div>
@@ -50,6 +55,7 @@ import GridVue from '@/objects/Grid/GridVue'
 
 export default {
   name: 'AuthTemplate',
+  props: ['titulo'],
   components: {
     Navbar,
     Rodape,
@@ -66,13 +72,22 @@ export default {
 }
 </script>
 <style scoped>
-.bga {
-  background-image: url('/static/img/bg.jpg');
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
+  .bga {
+    background-image: url('/static/img/bg.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .font-oleo-script {
+    font-family: 'Oleo Script', cursive;
+    color: #ffffff; 
+  }
+  
+  .round {
+    border-radius: 15px;
+  }
 </style>
 

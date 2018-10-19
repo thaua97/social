@@ -1,7 +1,7 @@
 <template>
 
-<auth-template titulo="Login">
-    <form-login />
+<auth-template titulo="Cadastre-se">
+    <form-register />
 </auth-template>
 
 </template>
@@ -9,13 +9,13 @@
 <script>
 
 import AuthTemplate from '@/templates/AuthTemplate'
-import FormLogin from '@/components/Forms/FormLogin'
+import FormRegister from '@/components/Forms/FormRegister'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   components: {
     AuthTemplate,
-    FormLogin
+    FormRegister
   },
   data () {
     return {
@@ -24,5 +24,3 @@ export default {
   }
 }
 </script>
-
-
