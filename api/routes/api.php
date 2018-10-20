@@ -42,6 +42,33 @@ Route::post('/cadastro', function(Request $request) {
 
 });
 
+Route::post('/login', function(Request $request) {
+    $data = $request->all();
+    
+    $validate = Validator::make($data, [
+        'email' => ['required', 'string', 'email', 'max:255'],
+        'password' => ['required', 'string'],
+    ]);
+
+    if ($validate->fails()) {
+        return $validate->errors();
+    }
+
+
+    if (Auth::attempt(['email'=>$data['email'], 'password'=>$data['password']])) {
+        $user = auth()->user();
+        
+        $user->token = $user->createToken($user->email)->accessToken;
+
+        return $user;
+        
+    } else {
+        return ['status'=>false];
+    }
+
+});
+
+
 Route::middleware('auth:api')->get('/usuario', function (Request $request) {
     return $request->user();
 });
