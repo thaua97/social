@@ -1,6 +1,9 @@
 <template>
     <span>
-        <div :class="'col s'+ tamanho">
+        <div v-if="tamanho" :class="'col s'+ tamanho">
+            <slot></slot>
+        </div>
+        <div v-else class="col s12">
             <slot></slot>
         </div>
     </span>

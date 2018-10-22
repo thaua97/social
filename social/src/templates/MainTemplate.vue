@@ -73,7 +73,7 @@ export default {
     return {
       user: false,
       links: [ 
-        { nome: user.name, link: 'perfil' },
+        { nome: "teste" , link: '' },
       ]
     }
   },
