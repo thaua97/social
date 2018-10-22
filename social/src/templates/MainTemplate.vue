@@ -3,8 +3,14 @@
 
     <header>
       <navbar cor="bg" logo="Space">
+        <li v-if="user">
+          <router-link class="orange-text text-lighten-4" to="/perfil">{{user.name}}</router-link>
+        </li>
         <li v-for="item in links" :key="item.nome">
             <router-link class="orange-text text-lighten-4" :to="'/'+item.link"> {{item.nome}}</router-link>
+        </li>
+        <li v-if="user">
+          <a class="orange-text text-lighten-4" v-on:click="sair">Sair</a>
         </li>
       </navbar>
     </header>
@@ -65,10 +71,26 @@ export default {
   },
   data () {
     return {
+      user: false,
       links: [ 
-        { nome: 'Teste', link: 'teste.html' },
-        { nome: 'Sair', link: 'login' }
+        { nome: user.name, link: 'perfil' },
       ]
+    }
+  },
+  created() {
+    let userToken = sessionStorage.getItem('usuario')
+
+    if(userToken){
+      this.user = JSON.parse(userToken)
+    } else {
+      this.$router.push('/login')
+    }
+  },
+  methods: {
+    sair(){
+      sessionStorage.clear()
+      this.usuario = false
+      this.$router.push('/login')
     }
   }
 }

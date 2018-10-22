@@ -63,10 +63,26 @@ export default {
   },
   data () {
     return {
+      usuario: false,
       links: [ 
-        { nome: 'Teste', link: 'teste.html' },
-        { nome: 'Sair', link: 'login' }
+        { nome: 'Registrar-se', link: 'register' },
+        { nome: 'Sobre o projeto', link: 'l' }
       ]
+    }
+  },
+  created() {
+    //utilizado para buscar os dados do usuario no navegador.
+    let userToken = sessionStorage.getItem('usuario')
+
+    if(userToken){
+      this.usuario = JSON.parse(userToken)
+      this.$router.push('/');
+    }
+  },
+  methods: {
+    sair(){
+      sessionStorage.clear();
+      this.usuario = false;
     }
   }
 }
