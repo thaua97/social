@@ -22,20 +22,27 @@ class UserController extends Controller
         ]);
     
         if ($validate->fails()) {
-            return $validate->errors();
+            return [
+                'status' => false, 
+                "validacao" => true, 
+                "erros" => $validate->errors()
+            ];
         }
     
     
-        if (Auth::attempt(['email'=>$data['email'], 'password'=>$data['password']])) {
+        if (Auth::attempt(['email'=> $data['email'], 'password'=>$data['password']])) {
             $user = auth()->user();
             
             $user->image = asset($user->image);
             $user->token = $user->createToken($user->email)->accessToken;
     
-            return $user;
+            return [ 
+                'status' => true, 
+                'user' => $user 
+            ];
             
         } else {
-            return ['status'=>false];
+            return ['status' => false];
         }
     }
 
@@ -50,7 +57,11 @@ class UserController extends Controller
         ]);
     
         if ($validate->fails()) {
-            return $validate->errors();
+            return [
+                'status' => false, 
+                "validacao" => true, 
+                "erros" => $validate->errors()
+            ];
         }
         $image = "/perfils/padrao.png";
     
@@ -66,7 +77,10 @@ class UserController extends Controller
                     ->accessToken;
         $user->image = asset($user->image);
     
-        return $user;
+        return [
+          'status' => true,
+          'user' => $user
+        ];
     }
 
     public function perfil(Request $request){
@@ -81,7 +95,11 @@ class UserController extends Controller
             'password' => ['required','string','min:6','confirmed']
         ]);
         if($validate->fails()){
-            return $validate->errors();
+            return [
+                'status' => false, 
+                "validacao" => true, 
+                "erros" => $validate->errors()
+            ];
         }
         $user->password = bcrypt($data['password']);
 
@@ -92,7 +110,11 @@ class UserController extends Controller
         ]);
 
         if($validate->fails()){
-            return $validate->errors();
+            return [
+                'status' => false, 
+                "validacao" => true, 
+                "erros" => $validate->errors()
+            ];
         }
         
         $user->name = $data['name'];
@@ -137,11 +159,10 @@ class UserController extends Controller
 
         $user->image = asset($user->image);
         $user->token = $user->createToken($user->email)->accessToken;
-        return $user;
+        return [
+            'status' => true,
+            'user' => $user
+        ];
 
-    }
-
-    public function user(Request $request){
-        return $request->user();
     }
 }

@@ -3,11 +3,22 @@
 <div class="row">
   <grid-vue tamanho="12">
       <div class="input-field">
-        <textarea v-model="conteudo" id="conteudoId" class="materialize-textarea"></textarea>
-        <label for="conteudoId">O que ta rolando?</label>
+        <input id="title" type="text" v-model="content.title">
+        <label for="title">O que ta rolando?</label>
       </div>
-      <p>
-        <button v-if="conteudo" class="btn waves-effect waves-light deep-purple darken-4 col s12 m2 l2 offset-m10 offset-l10">Publicar</button>
+        
+      <div v-if="content.title" class="input-field">
+        <textarea id="text" class="materialize-textarea" v-model="content.text" ></textarea>
+        <label for="text">Conteudo</label>
+      </div>
+
+      <div v-if="content.title && content.text" class="input-field">
+        <input id="image" type="text" v-model="content.image">
+        <label for="image">URL Imagem</label>
+      </div>
+        
+      <p class="right-align">
+        <button v-if="content.title && content.text" @click="addContent()" class="btn waves-effect waves-light deep-purple darken-4">Publicar</button>
       </p>
   </grid-vue>
 </div>
@@ -20,12 +31,42 @@
 
     export default {
       name: 'Publicar',
+      props: ['user'],
       components: {
         GridVue
       },
       data () {
         return {
-          conteudo: ''
+          content: {
+            title: '',
+            text: '',
+            image: ''
+          }
+        }
+      },
+      methods: {
+        addContent(){
+
+          this.$http.post(this.$urlAPI+`content/add`, {
+            title: this.content.title,
+            text: this.content.text,
+            image: this.content.image
+          },
+          {
+            "headers": {
+              "authorization" : "Bearer "+this.user.token
+            }
+          })
+          .then(response => {
+              if(response.data.status){
+                console.log(response.data.content)
+              }
+          })
+          .catch(e => {
+              console.log(e);
+              alert("Erro! Deu ruim! Tente denovo ou mais tarde")
+          })
+        
         }
       }
     }

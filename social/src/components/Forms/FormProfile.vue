@@ -41,8 +41,6 @@
     </div>
 </template>
 <script>
-    import axios from 'axios'
-
     export default {
       name: 'FormProfile',
       data () {
@@ -79,7 +77,7 @@
         },
         perfil() {
 
-          axios.put(`http://127.0.0.1:8000/api/perfil`, {
+          this.$http.put(this.$urlAPI+`perfil`, {
             name: this.name,
             email: this.email,
             image: this.image,
@@ -92,16 +90,16 @@
             }
           })
           .then(response => {
-            if(response.data.token){
+            if(response.data.status){
                 
-                this.user = response.data;
+                this.user = response.data.user;
                 sessionStorage.setItem('usuario',JSON.stringify(this.user));
                 alert('Perfil atualizado!');
 
-            } else {
+            } else if(response.data.status == false && response.data.validacao) {
                 //erros de valdiação
               let erros = '';
-              for(let erro of Object.values(response.data)){
+              for(let erro of Object.values(response.data.erros)){
                   erros += erro +" ";
               }
                 alert(erros)

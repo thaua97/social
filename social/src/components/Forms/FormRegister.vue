@@ -45,7 +45,7 @@
       },
       methods:{
         register() {
-            axios.post(`http://127.0.0.1:8000/api/cadastro`, {
+            this.$http.post(this.$urlAPI+`cadastro`, {
                 name: this.name,
                 email: this.email,
                 password: this.password,
@@ -53,21 +53,24 @@
             })
             .then(response => {
                 //console.log(response)
-                if(response.data.token){
+                if(response.data.status){
                     alert('Cadastro efetuado com sucesso!')
                     //Assim que cadastra efetua o login
-                    sessionStorage.setItem('usuario',JSON.stringify(response.data))
+                    sessionStorage.setItem('usuario',JSON.stringify(response.data.user))
                     this.$router.push('/')
                     
-                }else if(response.data.status == false){
-                    alert('Erro no cadastro, tente novamente mais tarde!')
-                }else{
-                    //erros de valdiação
+                }else if(response.data.status == false && response.data.validacao){
                     let erros = '';
-                    for(let erro of Object.values(response.data)){
+                    
+                    for(let erro of Object.values(response.data.erros)){
                         erros += erro +" ";
                     }
+
                     alert(erros)
+                }else{
+                    
+                    alert('Erro no cadastro, tente novamente mais tarde!')
+                
                 }
             })
             .catch(e => {

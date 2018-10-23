@@ -1,5 +1,7 @@
 <?php
-
+use App\User;
+use App\Content;
+use App\Comment;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +16,39 @@ Route::post('/cadastro', 'UserController@register');
 
 Route::post('/login', 'UserController@login');
 
-Route::middleware('auth:api')->get('/user', 'UserController@user');
-
 Route::middleware('auth:api')->put('/perfil', 'UserController@perfil');
+Route::middleware('auth:api')->post('/content/add', 'ContentController@add');
+
+Route::get('/testes', function(){
+   $user = User::find(1);
+   $user2 = User::find(2);
+
+
+    //add amigo: 
+    //$user->friends()->detach($user2->id);
+    //$user->friends()->toggle($user2->id);
+    
+    /*
+    $content = Content::find(1);
+    $user->likes()->toggle($content->id);
+    //Conta das curtidas
+    //return $content->likes()->count();
+    return $content->likes;
+    */
+
+    //add comentario
+    $content = Content::find(1);
+    $user->comments()->create([
+        'content_id' => $content->id,
+        'text' => 'Um comentario.',
+        'date' =>  date('Y-m-d'),
+    ]);
+
+    $user2->comments()->create([
+        'content_id' => $content->id,
+        'text' => 'No like this shit.',
+        'date' =>  date('Y-m-d'),
+    ]);
+    return $content->comments;
+
+});

@@ -1,6 +1,6 @@
 <template>
     <span>
-        <publicar-conteudo></publicar-conteudo>
+        <publicar-conteudo :user="usuario"></publicar-conteudo>
         <card-content 
           perfil="https://pbs.twimg.com/profile_images/947741683608965121/oWd523rK_400x400.jpg" 
           nome="Carl Johnson" 
@@ -31,6 +31,7 @@
 
     export default {
       name: 'Content',
+      props: ['usuario'],
       components: {
         CardContent,
         CardDetail,

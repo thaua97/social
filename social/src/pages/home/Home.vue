@@ -5,7 +5,7 @@
         <card-user></card-user>
       </span>
       <span slot="main">
-        <content-vue></content-vue>
+        <content-vue :usuario="user"></content-vue>
       </span>
     </main-template>
 
@@ -24,6 +24,19 @@ export default {
     MainTemplate,
     CardUser,
     ContentVue
+  },
+  data () {
+    return {
+      user: false
+    }
+  },
+  created() {
+    let userToken = sessionStorage.getItem('usuario')
+    if(userToken){
+      this.user = JSON.parse(userToken);
+      this.name = this.user.name;
+      this.email = this.user.email;
+    }
   }
 }
 </script>

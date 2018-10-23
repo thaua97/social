@@ -16,9 +16,6 @@
 </template>
 
 <script>
-    //import axios
-    import axios from 'axios'
-
     import GridVue from '@/objects/Grid/GridVue'
 
     export default {
@@ -34,25 +31,26 @@
       },
       methods:{
         login(){
-          axios.post(`http://127.0.0.1:8000/api/login`, {
+          this.$http.post(this.$urlAPI+`login`, {
             email: this.email,
             password:this.password
           })
           .then(response => {
                 //console.log(response)
-            if(response.data.token){
-              sessionStorage.setItem('usuario',JSON.stringify(response.data));
+            if(response.data.status){
+              sessionStorage.setItem('usuario',JSON.stringify(response.data.user));
               this.$router.push('/')
                     
-            }else if(response.data.status == false){
-              alert('Login inválido!')
-            }else{
-              console.log('erros de validação')
+            } else if(response.data.status == false && response.data.validacao){
+              
               let erros = '';
-              for(let erro of Object.values(response.data)){
+              for(let erro of Object.values(response.data.erros)){
                   erros += erro +" ";
               }
               alert(erros)
+
+            } else {
+              alert('Login invialido')
             }
           })
           .catch(e => {
