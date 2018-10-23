@@ -9,10 +9,12 @@
             </grid-vue>
             
             <grid-vue tamanho="8">
-                <span class="text-black">
-                    <h5>{{ user.name || ' '}}</h5>
-                    <small>Lorem ipsum dolor sit amet consectetur, adipisicing elit</small>
-                </span>
+                <div class="row">
+                    <span class="text-black">
+                        <h5>{{ user.name || ' '}}</h5>
+                        <small>Lorem ipsum dolor sit amet consectetur, adipisicing elit</small>
+                    </span>
+                </div>
             </grid-vue>
         
         </div>
