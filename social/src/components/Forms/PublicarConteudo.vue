@@ -31,7 +31,6 @@
 
     export default {
       name: 'Publicar',
-      props: ['user'],
       components: {
         GridVue
       },
@@ -54,7 +53,7 @@
           },
           {
             "headers": {
-              "authorization" : "Bearer "+this.user.token
+              "authorization" : "Bearer "+this.$store.getters.getToken
             }
           })
           .then(response => {

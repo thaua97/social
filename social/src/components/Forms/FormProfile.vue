@@ -45,7 +45,7 @@
       name: 'FormProfile',
       data () {
         return {
-            user: '',
+            user: false,
             name: '',
             email: '',
             image: '',
@@ -55,9 +55,9 @@
         }
       },
       created() {
-        let userToken = sessionStorage.getItem('usuario')
+        let userToken = this.$store.getters.getUser;
         if(userToken){
-            this.user = JSON.parse(userToken);
+            this.user = this.$store.getters.getUser;
             this.name = this.user.name;
             this.email = this.user.email;
         }
@@ -86,14 +86,16 @@
           },
           {
             "headers": {
-              "authorization" : "Bearer "+this.user.token
+              "authorization" : "Bearer "+this.$store.getters.getToken
             }
           })
           .then(response => {
             if(response.data.status){
                 
-                this.user = response.data.user;
-                sessionStorage.setItem('usuario',JSON.stringify(this.user));
+                
+                this.$store.commit('setUser', response.data.user)
+                this.user = this.$store.getters.getUser;
+                sessionStorage.setItem('usuario', JSON.stringify(this.user))
                 alert('Perfil atualizado!');
 
             } else if(response.data.status == false && response.data.validacao) {

@@ -36,11 +36,9 @@
         }
       },
       created() {
-        let userToken = sessionStorage.getItem('usuario')
+        let userToken = this.$store.getters.getUser
         if(userToken){
-          this.user = JSON.parse(userToken);
-          this.name = this.user.name;
-          this.email = this.user.email;
+          this.user = this.$store.getters.getUser
         }
       }
     }

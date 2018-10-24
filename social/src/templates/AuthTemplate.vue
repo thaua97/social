@@ -72,17 +72,11 @@ export default {
   },
   created() {
     //utilizado para buscar os dados do usuario no navegador.
-    let userToken = sessionStorage.getItem('usuario')
+    let userToken = this.$store.getters.getUser
 
     if(userToken){
-      this.usuario = JSON.parse(userToken)
+      this.usuario = this.$store.getters.getUser
       this.$router.push('/');
-    }
-  },
-  methods: {
-    sair(){
-      sessionStorage.clear();
-      this.usuario = false;
     }
   }
 }

@@ -38,14 +38,15 @@
           .then(response => {
                 //console.log(response)
             if(response.data.status){
-              sessionStorage.setItem('usuario',JSON.stringify(response.data.user));
+              this.$store.commit('setUser', response.data.user)
+              sessionStorage.setItem('usuario',JSON.stringify(response.data.user))
               this.$router.push('/')
                     
             } else if(response.data.status == false && response.data.validacao){
               
               let erros = '';
               for(let erro of Object.values(response.data.erros)){
-                  erros += erro +" ";
+                  erros += erro +" "
               }
               alert(erros)
 

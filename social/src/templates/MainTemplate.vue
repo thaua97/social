@@ -10,7 +10,7 @@
             <router-link class="orange-text text-lighten-4" :to="'/'+item.link"> {{item.nome}}</router-link>
         </li>
         <li v-if="user">
-          <a class="orange-text text-lighten-4" v-on:click="sair">Sair</a>
+          <a class="orange-text text-lighten-4" @click="sair">Sair</a>
         </li>
       </navbar>
     </header>
@@ -78,16 +78,17 @@ export default {
     }
   },
   created() {
-    let userToken = sessionStorage.getItem('usuario')
+    let userToken = this.$store.getters.getUser
 
     if(userToken){
-      this.user = JSON.parse(userToken)
+      this.user = this.$store.getters.getUser
     } else {
       this.$router.push('/login')
     }
   },
   methods: {
     sair(){
+      this.$store.commit('setUser', null)
       sessionStorage.clear()
       this.usuario = false
       this.$router.push('/login')

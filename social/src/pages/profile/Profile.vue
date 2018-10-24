@@ -39,10 +39,10 @@
         }
       },
       created() {
-        let userToken = sessionStorage.getItem('usuario')
+        let userToken = this.$store.getters.getUser
 
         if(userToken){
-          this.user = JSON.parse(userToken)
+          this.user = this.$store.getters.getUser
         } else {
           this.$router.push('/login')
         }

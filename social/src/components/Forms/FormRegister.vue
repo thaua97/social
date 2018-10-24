@@ -56,6 +56,7 @@
                 if(response.data.status){
                     alert('Cadastro efetuado com sucesso!')
                     //Assim que cadastra efetua o login
+                    this.$store.commit('setUser', response.data.user)
                     sessionStorage.setItem('usuario',JSON.stringify(response.data.user))
                     this.$router.push('/')
                     
