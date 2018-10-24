@@ -33,7 +33,7 @@ class UserController extends Controller
         if (Auth::attempt(['email'=> $data['email'], 'password'=>$data['password']])) {
             $user = auth()->user();
             
-            $user->image = asset($user->image);
+            //$user->image = asset($user->image);
             $user->token = $user->createToken($user->email)->accessToken;
     
             return [ 
@@ -75,7 +75,7 @@ class UserController extends Controller
         $user->token = $user
                     ->createToken($user->email)
                     ->accessToken;
-        $user->image = asset($user->image);
+        //$user->image = asset($user->image);
     
         return [
           'status' => true,
@@ -123,6 +123,45 @@ class UserController extends Controller
         }
 
         if(isset($data['image'])){
+
+        Validator::extend('base64image', function ($attribute, $value, $parameters, $validator) {
+            $explode = explode(',', $value);
+            $allow = ['png', 'jpg', 'svg','jpeg'];
+            $format = str_replace(
+                [
+                    'data:image/',
+                    ';',
+                    'base64',
+                ],
+                [
+                    '', '', '',
+                ],
+                $explode[0]
+            );
+            // check file format
+            if (!in_array($format, $allow)) {
+                return false;
+            }
+            // check base64 format
+            if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
+                return false;
+            }
+            return true;
+        });
+
+        $valiacao = Validator::make($data, [
+            'image' => 'base64image',
+
+        ],['base64image'=>'Imagem inválida']);
+
+        if($valiacao->fails()){
+          return [
+              'status'=>false,
+              "validacao"=>true,
+              "erros"=>$valiacao->errors()
+          ];
+        }
+
         $time = time();
         
         $mainDir = 'perfils';
@@ -141,8 +180,9 @@ class UserController extends Controller
                 mkdir($mainDir, 0700);
             }
             if ($user->image) {
-                if (file_exists($user->image)) {
-                    unlink($user->image);
+                $imgUser = str_replace(asset('/'),'',$user->image);
+                if (file_exists($imgUser)) {
+                    unlink($imgUser);
                 }
             }
             if(!file_exists($imageDir)){
@@ -157,7 +197,7 @@ class UserController extends Controller
 
         $user->save();
 
-        $user->image = asset($user->image);
+        //$user->image = asset($user->image);
         $user->token = $user->createToken($user->email)->accessToken;
         return [
             'status' => true,

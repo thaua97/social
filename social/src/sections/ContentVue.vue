@@ -1,24 +1,15 @@
 <template>
     <span>
         <publicar-conteudo></publicar-conteudo>
-        <card-content 
-          perfil="https://pbs.twimg.com/profile_images/947741683608965121/oWd523rK_400x400.jpg" 
-          nome="Carl Johnson" 
-          data="30/10/18">
+        <card-content v-for="item in lista" :key="item.id"
+          :perfil="item.user.image" 
+          :nome="item.user.name" 
+          :data="item.date">
             <card-detail 
-              titulo="Me and ma niggas" 
-              img="https://i.ytimg.com/vi/2FlYSbh7Vmk/maxresdefault.jpg" />
+              :title="item.title" 
+              :img="item.image"
+              :txt="item.text" />
         </card-content>
-
-        <card-content 
-          perfil="https://pbs.twimg.com/profile_images/947741683608965121/oWd523rK_400x400.jpg" 
-          nome="Carl Johnson" 
-          data="30/10/18">
-            <card-detail 
-              titulo="Me and ma niggas" 
-              txt="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium ipsa doloremque odit dolorum aliquam aspernatur quod porro laboriosam adipisci eveniet dolore, ea nulla sit sint magnam, cumque voluptatem laborum iusto!" />
-        </card-content>
-
     </span>
 </template>
 
@@ -36,6 +27,40 @@
         CardDetail,
         PublicarConteudo,
         GridVue
+      },
+      data () {
+        return {
+          user: false,
+        }
+      },
+      created() {
+        let userToken = this.$store.getters.getUser
+
+        if(userToken){
+          this.user = this.$store.getters.getUser
+          
+          this.$http.get(this.$urlAPI+`content/list`, 
+          {
+            "headers": {
+              "authorization" : "Bearer "+this.$store.getters.getToken
+            }
+          })
+          .then(response => {
+            console.log(response)
+            if(response.data.status){
+              this.$store.commit('setTimeLine', response.data.content.data)
+            }
+          })
+          .catch(e => {
+              alert("Erro! Tente novamente mais tarde :( ")
+          })
+        }
+      },
+      computed: {
+        //Observador da lista
+        lista(){
+          return this.$store.getters.getTimeLine
+        }
       }
     }
 </script>

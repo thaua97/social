@@ -30,7 +30,7 @@
     import GridVue from '@/objects/Grid/GridVue'
 
     export default {
-      name: 'Publicar',
+      name: 'PublicarConteudo',
       components: {
         GridVue
       },
@@ -45,27 +45,38 @@
       },
       methods: {
         addContent(){
-
           this.$http.post(this.$urlAPI+`content/add`, {
             title: this.content.title,
             text: this.content.text,
             image: this.content.image
           },
           {
-            "headers": {
+            "headers" : {
               "authorization" : "Bearer "+this.$store.getters.getToken
             }
           })
           .then(response => {
               if(response.data.status){
-                console.log(response.data.content)
-              }
+                console.log(response.data.content);
+                this.content = {title:'', text:'', image:''};
+                this.$store.commit('setTimeLine', response.data.content.data);
+                
+              } else if (response.data.status == false && response.data.validacao){
+                //erros de validação
+                let erros = '';
+                for(let erro of Object.values(response.data.erros)){
+                    erros += erro +" "
+                }
+                alert(erros)
+
+              } else {
+                alert('Login invialido')
+              } 
           })
           .catch(e => {
               console.log(e);
               alert("Erro! Deu ruim! Tente denovo ou mais tarde")
-          })
-        
+          })        
         }
       }
     }

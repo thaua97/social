@@ -18,12 +18,18 @@ Route::post('/login', 'UserController@login');
 
 Route::middleware('auth:api')->put('/perfil', 'UserController@perfil');
 Route::middleware('auth:api')->post('/content/add', 'ContentController@add');
+Route::middleware('auth:api')->get('/content/list', 'ContentController@list');
 
 Route::get('/testes', function(){
    $user = User::find(1);
    $user2 = User::find(2);
 
+   // $conteudos = Content::all();
+   // foreach($conteudos as $key => $value){
+   //     $value->delete();
+   // }
 
+    //return $conteudos;
     //add amigo: 
     //$user->friends()->detach($user2->id);
     //$user->friends()->toggle($user2->id);
@@ -37,18 +43,18 @@ Route::get('/testes', function(){
     */
 
     //add comentario
-    $content = Content::find(1);
-    $user->comments()->create([
-        'content_id' => $content->id,
-        'text' => 'Um comentario.',
-        'date' =>  date('Y-m-d'),
-    ]);
-
-    $user2->comments()->create([
-        'content_id' => $content->id,
-        'text' => 'No like this shit.',
-        'date' =>  date('Y-m-d'),
-    ]);
-    return $content->comments;
+    //$content = Content::find(1);
+    //$user->comments()->create([
+    //    'content_id' => $content->id,
+    //    'text' => 'Um comentario.',
+    //    'date' =>  date('Y-m-d'),
+    //]);
+//
+    //$user2->comments()->create([
+    //    'content_id' => $content->id,
+    //    'text' => 'No like this shit.',
+    //    'date' =>  date('Y-m-d'),
+    //]);
+    //return $content->comments;
 
 });

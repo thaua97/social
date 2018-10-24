@@ -13,19 +13,26 @@ Vue.prototype.$urlAPI = 'http://127.0.0.1:8000/api/'
 
 var store = {
   state: {
-    user: sessionStorage.getItem('usuario') ? JSON.parse(sessionStorage.getItem('usuario')) : null
+    user: sessionStorage.getItem('usuario') ? JSON.parse(sessionStorage.getItem('usuario')) : null,
+    timeLine: [],
   },
   getters: {
     getUser: state =>{
-      return state.user;
+      return state.user
     },
     getToken: state =>{
-      return state.user.token;
+      return state.user.token
+    },
+    getTimeLine: state => {
+      return state.timeLine
     }
   },
   mutations: {
     setUser(state, n){
-      state.user = n;
+      state.user = n
+    },
+    setTimeLine(state, n){
+      state.timeLine = n
     }
   }
 }
