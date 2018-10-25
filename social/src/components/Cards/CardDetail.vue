@@ -1,18 +1,18 @@
 <template>
-    <span>
+    <article>
         <div v-if="img && img != '#'" class="card-image">
             <img :src="img" alt="" />
             <span class="card-title white-text">
                 {{ title }}
             </span>
         </div>     
-        <div v-if="txt" class="card-content black-text">
-            <article>
+        <div v-if="text" class="card-content black-text">
+            <div>
                 <h4 v-if="img === '#'">{{ title }}</h4>
-                <p>{{ txt }}</p>
-            </article>
+                <p>{{ text }}</p>
+            </div>
         </div>
-    </span>
+    </article>
 </template>
 
 <script>
@@ -20,7 +20,7 @@
 
     export default {
       name: 'CardDetail',
-      props: ['img', 'title', 'txt'],
+      props: ['img', 'title', 'text'],
       components: {
         GridVue
       }

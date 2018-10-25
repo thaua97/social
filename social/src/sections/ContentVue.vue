@@ -2,13 +2,17 @@
     <span>
         <publicar-conteudo></publicar-conteudo>
         <card-content v-for="item in lista" :key="item.id"
+          :id="item.id"
+          :tlikes="item.total_likes"
+          :comments="item.comments"
+          :likeContent="item.content_like"
           :perfil="item.user.image" 
           :nome="item.user.name" 
           :data="item.date">
             <card-detail 
               :title="item.title" 
               :img="item.image"
-              :txt="item.text" />
+              :text="item.text" />
         </card-content>
     </span>
 </template>
