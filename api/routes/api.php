@@ -19,10 +19,20 @@ Route::post('/login', 'UserController@login');
 Route::middleware('auth:api')->put('/perfil', 'UserController@perfil');
 Route::middleware('auth:api')->post('/content/add', 'ContentController@add');
 Route::middleware('auth:api')->get('/content/list', 'ContentController@list');
+Route::middleware('auth:api')->put('/content/like/{id}', 'ContentController@like');
+Route::middleware('auth:api')->put('/content/comment/{id}', 'ContentController@comment');
 
 Route::get('/testes', function(){
-   $user = User::find(1);
-   $user2 = User::find(2);
+   
+    //$user = User::find(2);
+    //
+    //$content = Content::find(26);
+    //$user->comments()->create([
+    //    'content_id' => $content->id,
+    //    'text' => 'Um comentario teste asdasdasdas.',
+    //    'date' =>  date('Y-m-d H:i:s'),
+    //]);
+
 
    // $conteudos = Content::all();
    // foreach($conteudos as $key => $value){

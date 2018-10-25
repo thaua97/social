@@ -11,6 +11,18 @@ class ContentController extends Controller
     public function list(Request $request)
     {
         $contents = Content::with('user')->orderBy('date','DESC')->paginate(6);
+        $user = $request->user();
+
+        foreach ($contents as $key => $content) {
+            $content->total_likes = $content->likes()->count();
+            $content->comments = $content->comments()->with('user')->orderBy('date','DESC')->get();
+            $liked = $user->likes()->find($content->id);
+            if($liked){
+                $content->content_like = true;
+            } else {
+                $content->content_like = false;
+            }
+        }
 
         return [
             'status' => true,
@@ -55,5 +67,52 @@ class ContentController extends Controller
             'status' => true,
             'content' => $contents
         ];
+    }
+
+    public function like($id, Request $request)
+    {
+        $content = Content::find($id);
+        if ($content) {
+            $user = $request->user();
+            $user->likes()->toggle($content->id);
+            //return $content->likes()->count();
+            //return $content->likes;
+            return [
+                'status' => true,
+                'likes' => $content->likes()->count(),
+                'list' => $this->list($request)
+            ];
+        } else {
+            return [
+                'status' => false,
+                'error' => 'Conteúdo não existe!'
+            ];
+        }
+        
+    }
+
+    public function comment($id, Request $request)
+    {
+        $content = Content::find($id);
+        if ($content) {
+            $user = $request->user();
+            
+            $user->comments()->create([
+                'content_id' => $content->id,
+                'text' => $request->text,
+                'date' =>  date('Y-m-d H:i:s'),
+            ]);
+
+            return [
+                'status' => true,
+                'list' => $this->list($request)
+            ];
+
+        } else {
+            return [
+                'status' => false,
+                'error' => 'Conteúdo não existe!'
+            ];
+        }
     }
 }
