@@ -31,7 +31,7 @@
       },
       methods:{
         login(){
-          this.$http.post(this.$urlAPI+`login`, {
+          this.$http.post(this.$urlAPI+`entrar`, {
             email: this.email,
             password:this.password
           })
@@ -54,9 +54,9 @@
               alert('Login invialido')
             }
           })
-          .catch(e => {
-            alert("Erro! Tente novamente mais tarde :( ")
-          })
+          .catch(
+            alert("Erro! Tente novamente mais tarde :( ")    
+          )
         }
       }
     }

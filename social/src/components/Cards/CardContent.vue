@@ -4,12 +4,12 @@
             <div class="card-content">
                 <div class="row">
                     <grid-vue tamanho="1">
-                        <img :src="perfil" alt="" class="responsive-img circle">
+                        <router-link class="black-text" :to="'/pagina/'+linkUsr"><img :src="perfil" alt="" class="responsive-img circle"></router-link>
                     </grid-vue>
                     
                     <grid-vue tamanho="11">
                         <span class="black-text">
-                            <strong>{{ nome }}</strong> - <small>{{ data }}</small>
+                            <strong><router-link class="black-text" :to="'/pagina/'+linkUsr">{{ nome }}</router-link></strong> - <small>{{ data }}</small>
                         </span>
                     </grid-vue>
                 </div>
@@ -67,7 +67,7 @@
 
     export default {
       name: 'CardContent',
-      props: ['id', 'perfil', 'nome', 'data', 'tlikes', 'comments', 'likeContent'],
+      props: ['id', 'perfil', 'nome', 'linkUsr', 'data', 'tlikes', 'comments', 'likeContent'],
       components: {
         GridVue
       },

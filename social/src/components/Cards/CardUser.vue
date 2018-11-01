@@ -11,7 +11,7 @@
             <grid-vue tamanho="8">
                 <div class="row">
                     <span class="text-black">
-                        <h5>{{ user.name || ' '}}</h5>
+                        <router-link class="title black-text" :to="usrLink">{{ user.name || ' '}}</router-link>
                         <small>Lorem ipsum dolor sit amet consectetur, adipisicing elit</small>
                     </span>
                 </div>
@@ -32,14 +32,21 @@
       },
       data () {
         return {
-          user: false
+          user: false,
+          usrLink: ''
         }
       },
       created() {
         let userToken = this.$store.getters.getUser
         if(userToken){
           this.user = this.$store.getters.getUser
+          this.usrLink = '/pagina/'+ this.user.id
         }
       }
     }
 </script>
+<style scoped>
+    .title {
+        font-size: 1.9rem;
+    }
+</style>

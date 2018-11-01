@@ -8,7 +8,7 @@
           :likeContent="item.content_like"
           :perfil="item.user.image" 
           :nome="item.user.name"
-          :linkUsr="item.user.id" 
+          :linkUsr="item.user.id"
           :data="item.date">
             <card-detail 
               :title="item.title" 
@@ -30,7 +30,7 @@
     import GridVue from '@/objects/Grid/GridVue'
 
     export default {
-      name: 'Content',
+      name: 'ContentUser',
       components: {
         CardContent,
         CardDetail,
@@ -41,7 +41,8 @@
         return {
           user: false,
           npu: null,
-          stopScroll: false
+          stopScroll: false,
+          pageMaster: {image: '', name: ''}
         }
       },
       created() {
@@ -50,7 +51,7 @@
         if(userToken){
           this.user = this.$store.getters.getUser
           
-          this.$http.get(this.$urlAPI+`content/list`, 
+          this.$http.get(this.$urlAPI+`content/page/list/`+this.$route.params.id, 
           {
             "headers": {
               "authorization" : "Bearer "+this.$store.getters.getToken
@@ -61,6 +62,7 @@
             if(response.data.status){
               this.$store.commit('setTimeLine', response.data.content.data)
               this.npu = response.data.content.next_page_url
+              this.pageMaster = response.data.master
             }
           })
           .catch(e => {
