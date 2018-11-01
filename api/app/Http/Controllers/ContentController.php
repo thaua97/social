@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\User;
 use App\Content;
 
 class ContentController extends Controller
@@ -26,8 +27,40 @@ class ContentController extends Controller
 
         return [
             'status' => true,
-            'content' => $contents
+            'content' => $contents,
+            'master' => $pageMaster
         ];
+    }
+
+    public function page($id, Request $request)
+    {
+        $pageMaster = User::find($id);
+        
+        if ($pageMaster) {
+            $contents = $pageMaster->contents()->with('user')->orderBy('date','DESC')->paginate(6);
+            $user = $request->user();
+    
+            foreach ($contents as $key => $content) {
+                $content->total_likes = $content->likes()->count();
+                $content->comments = $content->comments()->with('user')->orderBy('date','DESC')->get();
+                $liked = $user->likes()->find($content->id);
+                if($liked){
+                    $content->content_like = true;
+                } else {
+                    $content->content_like = false;
+                }
+            }
+        
+            return [
+                'status' => true,
+                'content' => $contents
+            ];
+        } else {
+           return [
+               'status' => false,
+               'erro' => 'Usuário não existe!'
+           ];
+        }
     }
 
     public function add(Request $request)
